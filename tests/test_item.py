@@ -50,3 +50,13 @@ def test_string_to_number():
     assert Item.string_to_number("3") == 3
     assert Item.string_to_number("3.25") == 3
     assert Item.string_to_number("3.5674") == 3
+
+
+def test_repr():
+    item3 = Item("Мышка", 799, 100)
+    assert item3.__repr__() == "Item('Мышка', 799, 100)"
+
+
+def test_str():
+    item4 = Item("Провод", 199, 100)
+    assert item4.__str__() == "Провод"
