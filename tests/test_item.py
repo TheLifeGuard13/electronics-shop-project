@@ -60,3 +60,11 @@ def test_repr():
 def test_str():
     item4 = Item("Провод", 199, 100)
     assert item4.__str__() == "Провод"
+
+
+def test_add():
+    item5 = Item("Провод", 199, 100)
+    item6 = Item("Товар", 50, 11)
+    assert item5 + item6 == 111
+    with pytest.raises(Exception):
+        assert item5 + 1000
