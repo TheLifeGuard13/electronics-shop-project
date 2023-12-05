@@ -73,3 +73,9 @@ class Item:
         if string.isdigit():
             return int(string)
         return int(float(string))
+
+    def __str__(self) -> str:
+        return self.name
+
+    def __repr__(self) -> str:
+        return f"{self.__class__.__name__}{self.name, self.price, self.quantity}"
