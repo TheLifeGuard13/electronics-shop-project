@@ -74,6 +74,15 @@ class Item:
             return int(string)
         return int(float(string))
 
+    def __add__(self, other):
+        """
+        Сложение атрибутов классов.
+        """
+        if issubclass(other.__class__, self.__class__):
+            return self.quantity + other.quantity
+        else:
+            raise Exception
+
     def __str__(self) -> str:
         return self.name
 
