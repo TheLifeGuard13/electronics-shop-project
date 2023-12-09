@@ -74,7 +74,7 @@ class Item:
             return int(string)
         return int(float(string))
 
-    def __add__(self, other):
+    def __add__(self, other: typing.Any) -> typing.Any:
         """
         Сложение атрибутов классов.
         """
