@@ -1,8 +1,9 @@
 from pathlib import Path
 
+import pandas as pd
 import pytest
 
-from src.item import Item
+from src.item import InstantiateCSVError, Item
 
 DATA_PATH = Path(__file__).parent.parent.joinpath("src", "items.csv")
 DATA_PATH_EMPTY = Path(__file__).parent.parent.joinpath("tests", "tests_data", "empty.csv")
@@ -68,3 +69,13 @@ def test_add():
     assert item5 + item6 == 111
     with pytest.raises(Exception):
         assert item5 + 1000
+
+
+def test_exceptions():
+    df = pd.read_csv("..//src/items_broken.csv", encoding="utf-8")
+    assert df.shape == (2, 2)
+    with pytest.raises(FileNotFoundError):
+        assert pd.read_csv("..//src/no_file.csv")
+    assert len(list(df.columns)) == 2
+    with pytest.raises(InstantiateCSVError):
+        assert Item.instantiate_from_csv("..//src/items_broken.csv")
