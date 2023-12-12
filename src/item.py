@@ -57,13 +57,19 @@ class Item:
         """
         Создает экземпляры класса из файла csv.
         """
-        with open(file_name, "r") as file:
-            dict_reader = csv.DictReader(file, delimiter=",")
-            for row in dict_reader:
-                name = row["name"]
-                price = Item.string_to_number(row["price"])
-                quantity = Item.string_to_number(row["quantity"])
-                Item.all.append(cls(name, price, quantity))
+        try:
+            with open(file_name, "r") as file:
+                dict_reader = csv.DictReader(file, delimiter=",")
+                for row in dict_reader:
+                    if len(row) == 3:
+                        name = row["name"]
+                        price = Item.string_to_number(row["price"])
+                        quantity = Item.string_to_number(row["quantity"])
+                        Item.all.append(cls(name, price, quantity))
+                    else:
+                        raise InstantiateCSVError
+        except FileNotFoundError:
+            raise FileNotFoundError("_Отсутствует файл item.csv_")
 
     @staticmethod
     def string_to_number(string: str) -> int:
@@ -88,3 +94,13 @@ class Item:
 
     def __repr__(self) -> str:
         return f"{self.__class__.__name__}{self.name, self.price, self.quantity}"
+
+
+class InstantiateCSVError(Exception):
+    """Класс ошибки при поврежденном файле"""
+
+    def __init__(self, *args: typing.Any, **kwargs: typing.Any) -> None:
+        self.error_message = "_Файл item.csv поврежден_"
+
+    def __str__(self, *args: typing.Any, **kwargs: typing.Any) -> str:
+        return self.error_message
